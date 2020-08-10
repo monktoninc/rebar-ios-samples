@@ -47,4 +47,3 @@ Part of NIAP App 1.3 is the inclusion of Swid Tags for software identification. 
 The `swid-generate` script, which is invoked with the `Build Actions` in the project, will look for the `CFBundleShortVersionString` value in your app's PList and embed that within the Swid tag.
 
 Your organization must customize the Swid tag for deployment. 
-
