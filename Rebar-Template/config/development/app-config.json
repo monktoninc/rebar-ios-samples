@@ -1,0 +1,9 @@
+{
+  "__Comment__": "This is the app configuration for your app on iOS",
+  "rebar.api.host": "api.example.com",
+  "rebar.tls.pinned": [
+    "add-SHA512-pins"
+  ],
+  "rebar.keychain.group": "your-app-identifier.monktonapps",
+  "rebar.app.logo": null
+}

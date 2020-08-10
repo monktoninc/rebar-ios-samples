@@ -1,0 +1,75 @@
+#!/bin/sh
+set -e
+
+# Grab the base directory we are working from
+BASE_DIRECTORY="$1"
+
+# This could be the same as the base directory 
+PROJECT_DIR="$2"
+CONFIGURATION="$3"
+BUILT_PRODUCTS_DIR="$4"
+PRODUCT_NAME="$5"
+EXPANDED_CODE_SIGN_IDENTITY_NAME="$6"
+IS_SCAN_BUILD="$7"
+IS_APP_STORE="$8"
+
+# Set the default value
+if [ -z "$IS_SCAN_BUILD" ]; then
+    IS_SCAN_BUILD="false"
+fi
+# Set the default value
+if [ -z "$IS_APP_STORE" ]; then
+    IS_APP_STORE="false"
+fi
+
+# Generate the SWID tags
+${BASE_DIRECTORY}/helpers/swid-generate
+
+# Ensure that the build directory is valid
+mkdir -p "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Frameworks"
+
+# Where we will copy the SDK from
+SDK_SOURCE_TARGET="Development"
+
+# Determine where we are grabbing our scan builds from 
+# if [ "${IS_SCAN_BUILD}" == "true" ]; 
+# then    
+#     SDK_SOURCE_TARGET="Production"
+# elif [ "${CONFIGURATION}" == "Release" ]; then
+#     SDK_SOURCE_TARGET="Production"
+# fi
+
+if [ "${CONFIGURATION}" == "Release" ]; then
+    SDK_SOURCE_TARGET="Production"
+fi
+
+# Copy over the frameworks for the target
+cp -r "${BASE_DIRECTORY}/rebar-sdk/${SDK_SOURCE_TARGET}/Rebar.framework" "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Frameworks"
+cp -r "${BASE_DIRECTORY}/rebar-sdk/${SDK_SOURCE_TARGET}/RebarSupport.framework" "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Frameworks"
+cp -r "${BASE_DIRECTORY}/rebar-sdk/${SDK_SOURCE_TARGET}/openssl.framework" "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Frameworks"
+
+# Perform code signing of frameworks
+codesign --force --verbose --sign "${EXPANDED_CODE_SIGN_IDENTITY_NAME}" ${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Frameworks/Rebar.framework
+codesign --force --verbose --sign "${EXPANDED_CODE_SIGN_IDENTITY_NAME}" ${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Frameworks/RebarSupport.framework
+codesign --force --verbose --sign "${EXPANDED_CODE_SIGN_IDENTITY_NAME}" ${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Frameworks/openssl.framework
+
+mkdir -p "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Frameworks"
+
+if [ "${IS_SCAN_BUILD}" == "true" ]; 
+then    
+    cp -r "${PROJECT_DIR}/config/test/app-config.json" "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app"
+elif [ "${IS_APP_STORE}" == "true" ]; 
+then    
+    cp -r "${PROJECT_DIR}/config/appstore/app-config.json" "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app"
+else
+    # Copy the configuration files
+    if [ "${CONFIGURATION}" == "Debug" ]; then
+    cp -r "${PROJECT_DIR}/config/development/app-config.json" "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app"
+    fi
+    if [ "${CONFIGURATION}" == "Test" ]; then
+    cp -r "${PROJECT_DIR}/config/test/app-config.json" "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app"
+    fi
+    if [ "${CONFIGURATION}" == "Release" ]; then
+    cp -r "${PROJECT_DIR}/config/production/app-config.json" "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app"
+    fi
+fi

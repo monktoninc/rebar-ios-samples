@@ -1,0 +1,62 @@
+#!/bin/sh
+set -e
+
+# Grab the base directory we are working from
+CONFIGURATION="$1"
+TARGET_BUILD_DIR="$2"
+WRAPPER_NAME="$3"
+IS_SCAN_BUILD="$4"
+
+if [ -z "$IS_SCAN_BUILD" ]; then
+    IS_SCAN_BUILD="false"
+fi
+
+echo "CONFIGURATION = $CONFIGURATION"
+
+if [[ "${CONFIGURATION}" = "Debug" && "${IS_SCAN_BUILD}" = "false" ]]; 
+then
+    exit 0;
+fi
+
+APP_PATH="${TARGET_BUILD_DIR}/${WRAPPER_NAME}"
+
+# Architectures to strip out
+INVALID_ARCH=( "x86_64" "i386" "armv7" )
+
+# This script loops through the frameworks embedded in the application and removes unused architectures.
+find "$APP_PATH" -name '*.framework' -type d | while read -r FRAMEWORK
+do
+
+    # Fix for when frameworks have plist in /resources
+    if test -f "${FRAMEWORK}/Info.plist"; then
+        FRAMEWORK_EXECUTABLE_NAME=$(defaults read "$FRAMEWORK/Info.plist" CFBundleExecutable)
+    else
+        FRAMEWORK_EXECUTABLE_NAME=$(defaults read "$FRAMEWORK/Resources/Info.plist" CFBundleExecutable)
+    fi
+
+    # Format the path
+    FRAMEWORK_EXECUTABLE_PATH="$FRAMEWORK/$FRAMEWORK_EXECUTABLE_NAME"
+    
+    # Grab the architecture values 
+    ARCH_VALUES=$(lipo -info ${FRAMEWORK_EXECUTABLE_PATH})
+    FOUND_ANY="false"
+
+    # Look for bad architectures
+    for architecture in "${INVALID_ARCH[@]}"
+    do :
+        if [[ "$ARCH_VALUES" == *"${architecture}"* ]];
+        then
+            FOUND_ANY="true"
+            echo "Stripping ${architecture} from ${FRAMEWORK_EXECUTABLE_NAME}"
+            lipo -remove ${architecture} -output ${FRAMEWORK_EXECUTABLE_PATH} ${FRAMEWORK_EXECUTABLE_PATH}
+        fi
+    done
+
+    # Do we need to resign?
+    if [[ $FOUND_ANY = "true" ]]; 
+    then
+        echo "Resigning ${FRAMEWORK_EXECUTABLE_NAME}"
+        codesign --force --verbose --sign "${EXPANDED_CODE_SIGN_IDENTITY_NAME}" $FRAMEWORK_EXECUTABLE_PATH 2>&1 > /dev/null
+    fi
+
+done

@@ -1,0 +1,11 @@
+#!/bin/sh
+set -e
+
+# Path to the PList for the project
+buildPlist="projectfiles/Info.plist"
+
+# Get the CFBundleShortVersionString from the app plist
+NEW_TAG=$(/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" $buildPlist)
+
+# Update the swid tag
+sed -i  "" "s|version\=.*$|version\=\"${NEW_TAG}\"|" app.swidtag
