@@ -1,1 +1,3 @@
-Rebar-Template/rebar-sdk
+rebar-sdk/*
+.DS_Store
+
