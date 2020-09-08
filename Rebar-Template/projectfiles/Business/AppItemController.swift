@@ -59,7 +59,7 @@ class AppItemController<T: AppItem> {
 	/**
 	* Parses and stores raw data from the service
 	*/
-	func parseAndStore(_ items: [String:AnyObject]) {
+	func parseAndStore(_ items: [String:Any]) {
 		
 	}
 	

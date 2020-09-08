@@ -25,7 +25,7 @@ class RebarAppItemsViewController : RebarCoreViewController, UITableViewDataSour
 	@IBOutlet var fileTableView: UITableView!
 	@IBOutlet var fileActionButton: UIBarButtonItem!
     
-    var appSyncer: RebarAppSyncWrapper? = nil;
+    var appSyncer: AccountModel? = nil;
     var refreshDown = UIRefreshControl()
 	
 	static let AppSettingCellIdentifier: String! = "AppSettingCell";
@@ -117,40 +117,20 @@ class RebarAppItemsViewController : RebarCoreViewController, UITableViewDataSour
             return;
         }
         
-        self.appSyncer = RebarAppSyncWrapper();
+        // Configure the syncer
+        self.appSyncer = AccountModel();
         
-        
-        // Registration is complete now, cleanup
-        self.appSyncer?.cleanupRequest = {
-            self.appSyncer = nil;
-        };
-        
-        // What to do when there is a successful request
-        self.appSyncer?.successfulRequest = {(response: RebarSecureResponse!) in
-            
-            var json = response.getJson();
-            
-            // Grab data protection items
-            let dataProtection = json!["say"].stringValue;
-            
-            let alertController = UIAlertController(title: "Survey Says", message: dataProtection, preferredStyle: .alert);
-            
-            alertController.addAction(UIAlertAction(title: "OK", style: .default) { (action) in });
-            
-            self.present(alertController, animated: true) { };
-            
-        };
-        
-        // What to do when the request fails
-        self.appSyncer?.failedRequest = {(response: RebarSecureResponse!, willLogoff: Bool) in
-            if (willLogoff) {
-                return;
+        /**
+         Retrieves the account details
+         */
+        _ = self.appSyncer?.getAccount {
+            [weak self] (account) in
+            guard let self = self else {
+                return
             }
-            response.apiError?.show(self);
-        };
-        
-        self.appSyncer?.sync();
-        
+            self.appSyncer = nil
+            /** Do some thing with the account here */
+        }
         
     }
 }

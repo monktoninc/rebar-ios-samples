@@ -24,15 +24,17 @@
 		F266F1C41F958D8B00251905 /* RebarAppSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F266F1BA1F958D7A00251905 /* RebarAppSettingsViewController.swift */; };
 		F266F1C51F958D9900251905 /* AppItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F266F1A21F958D7A00251905 /* AppItem.swift */; };
 		F266F1C61F958D9900251905 /* AppItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F266F1A31F958D7A00251905 /* AppItemController.swift */; };
-		F266F1C71F958D9900251905 /* UserInformationParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F266F1A51F958D7A00251905 /* UserInformationParser.swift */; };
 		F266F1C81F958D9900251905 /* RebarAppAppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F266F1A61F958D7A00251905 /* RebarAppAppConfiguration.swift */; };
 		F266F1C91F958D9900251905 /* RebarAppDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F266F1A71F958D7A00251905 /* RebarAppDatabase.swift */; };
 		F266F1CA1F958D9900251905 /* UserInformationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F266F1A91F958D7A00251905 /* UserInformationItem.swift */; };
 		F266F1CB1F958D9900251905 /* UserInformationItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F266F1AA1F958D7A00251905 /* UserInformationItemController.swift */; };
-		F266F1CC1F958D9900251905 /* RebarAppSyncWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F266F1AC1F958D7A00251905 /* RebarAppSyncWrapper.swift */; };
 		F266F1CF1F958DAC00251905 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F266F1CE1F958DAC00251905 /* CoreGraphics.framework */; };
 		F266F1D21F958DC200251905 /* RebarSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F266F1D01F958DC200251905 /* RebarSupport.framework */; };
 		F266F1D31F958DC200251905 /* Rebar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F266F1D11F958DC200251905 /* Rebar.framework */; };
+		F2A08E7E24E1E2970094FE94 /* SecureUrlRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A08E7D24E1E2970094FE94 /* SecureUrlRequest.swift */; };
+		F2A08E8024E1E9E20094FE94 /* AccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A08E7F24E1E9E20094FE94 /* AccountModel.swift */; };
+		F2A08E8324E1EAF50094FE94 /* AppUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A08E8224E1EAF50094FE94 /* AppUtil.swift */; };
+		F2A08E8524E1ED6F0094FE94 /* LocalUserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A08E8424E1ED6F0094FE94 /* LocalUserProfile.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,12 +50,10 @@
 		F266F1A01F958D5700251905 /* app-config.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "app-config.json"; sourceTree = "<group>"; };
 		F266F1A21F958D7A00251905 /* AppItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppItem.swift; sourceTree = "<group>"; };
 		F266F1A31F958D7A00251905 /* AppItemController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppItemController.swift; sourceTree = "<group>"; };
-		F266F1A51F958D7A00251905 /* UserInformationParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInformationParser.swift; sourceTree = "<group>"; };
 		F266F1A61F958D7A00251905 /* RebarAppAppConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RebarAppAppConfiguration.swift; sourceTree = "<group>"; };
 		F266F1A71F958D7A00251905 /* RebarAppDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RebarAppDatabase.swift; sourceTree = "<group>"; };
 		F266F1A91F958D7A00251905 /* UserInformationItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInformationItem.swift; sourceTree = "<group>"; };
 		F266F1AA1F958D7A00251905 /* UserInformationItemController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInformationItemController.swift; sourceTree = "<group>"; };
-		F266F1AC1F958D7A00251905 /* RebarAppSyncWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RebarAppSyncWrapper.swift; sourceTree = "<group>"; };
 		F266F1AF1F958D7A00251905 /* UIImageExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtensions.swift; sourceTree = "<group>"; };
 		F266F1B11F958D7A00251905 /* RebarAppItemsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RebarAppItemsViewController.swift; sourceTree = "<group>"; };
 		F266F1B21F958D7A00251905 /* RebarAppMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RebarAppMainViewController.swift; sourceTree = "<group>"; };
@@ -68,6 +68,10 @@
 		F266F1D01F958DC200251905 /* RebarSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RebarSupport.framework; path = "./rebar-sdk/Production/RebarSupport.framework"; sourceTree = "<group>"; };
 		F266F1D11F958DC200251905 /* Rebar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Rebar.framework; path = "./rebar-sdk/Production/Rebar.framework"; sourceTree = "<group>"; };
 		F27D57B31F96D5AF0092C502 /* RebarApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RebarApp.entitlements; sourceTree = "<group>"; };
+		F2A08E7D24E1E2970094FE94 /* SecureUrlRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureUrlRequest.swift; sourceTree = "<group>"; };
+		F2A08E7F24E1E9E20094FE94 /* AccountModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountModel.swift; sourceTree = "<group>"; };
+		F2A08E8224E1EAF50094FE94 /* AppUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUtil.swift; sourceTree = "<group>"; };
+		F2A08E8424E1ED6F0094FE94 /* LocalUserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalUserProfile.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,9 +160,9 @@
 		F266F1A11F958D7A00251905 /* Business */ = {
 			isa = PBXGroup;
 			children = (
-				F266F1AB1F958D7A00251905 /* Wrappers */,
+				F2A08E8124E1EAEC0094FE94 /* Utility */,
+				F2A08E7C24E1E2840094FE94 /* DataInTransit */,
 				F266F1A81F958D7A00251905 /* StoredItems */,
-				F266F1A41F958D7A00251905 /* Parsers */,
 				F266F1A21F958D7A00251905 /* AppItem.swift */,
 				F266F1A31F958D7A00251905 /* AppItemController.swift */,
 				F266F1A61F958D7A00251905 /* RebarAppAppConfiguration.swift */,
@@ -167,29 +171,14 @@
 			path = Business;
 			sourceTree = "<group>";
 		};
-		F266F1A41F958D7A00251905 /* Parsers */ = {
-			isa = PBXGroup;
-			children = (
-				F266F1A51F958D7A00251905 /* UserInformationParser.swift */,
-			);
-			path = Parsers;
-			sourceTree = "<group>";
-		};
 		F266F1A81F958D7A00251905 /* StoredItems */ = {
 			isa = PBXGroup;
 			children = (
+				F2A08E8424E1ED6F0094FE94 /* LocalUserProfile.swift */,
 				F266F1A91F958D7A00251905 /* UserInformationItem.swift */,
 				F266F1AA1F958D7A00251905 /* UserInformationItemController.swift */,
 			);
 			path = StoredItems;
-			sourceTree = "<group>";
-		};
-		F266F1AB1F958D7A00251905 /* Wrappers */ = {
-			isa = PBXGroup;
-			children = (
-				F266F1AC1F958D7A00251905 /* RebarAppSyncWrapper.swift */,
-			);
-			path = Wrappers;
 			sourceTree = "<group>";
 		};
 		F266F1AD1F958D7A00251905 /* UI */ = {
@@ -241,6 +230,23 @@
 				F266F1CE1F958DAC00251905 /* CoreGraphics.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F2A08E7C24E1E2840094FE94 /* DataInTransit */ = {
+			isa = PBXGroup;
+			children = (
+				F2A08E7D24E1E2970094FE94 /* SecureUrlRequest.swift */,
+				F2A08E7F24E1E9E20094FE94 /* AccountModel.swift */,
+			);
+			path = DataInTransit;
+			sourceTree = "<group>";
+		};
+		F2A08E8124E1EAEC0094FE94 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				F2A08E8224E1EAF50094FE94 /* AppUtil.swift */,
+			);
+			path = Utility;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -370,15 +376,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F2A08E8024E1E9E20094FE94 /* AccountModel.swift in Sources */,
 				F266F1BF1F958D8B00251905 /* RebarListItemTableViewCell.swift in Sources */,
+				F2A08E8524E1ED6F0094FE94 /* LocalUserProfile.swift in Sources */,
 				F266F1C81F958D9900251905 /* RebarAppAppConfiguration.swift in Sources */,
+				F2A08E8324E1EAF50094FE94 /* AppUtil.swift in Sources */,
+				F2A08E7E24E1E2970094FE94 /* SecureUrlRequest.swift in Sources */,
 				F266F1C61F958D9900251905 /* AppItemController.swift in Sources */,
 				F266F1C91F958D9900251905 /* RebarAppDatabase.swift in Sources */,
 				F266F1C11F958D8B00251905 /* RebarAppSettingAction.swift in Sources */,
 				F266F1C41F958D8B00251905 /* RebarAppSettingsViewController.swift in Sources */,
 				F266F1BD1F958D8B00251905 /* RebarAppMainViewController.swift in Sources */,
-				F266F1C71F958D9900251905 /* UserInformationParser.swift in Sources */,
-				F266F1CC1F958D9900251905 /* RebarAppSyncWrapper.swift in Sources */,
 				F266F1BB1F958D8B00251905 /* UIImageExtensions.swift in Sources */,
 				F266F1881F958D0A00251905 /* ViewController.swift in Sources */,
 				F266F1C51F958D9900251905 /* AppItem.swift in Sources */,

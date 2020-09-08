@@ -35,29 +35,39 @@ class UserInformationItemController : AppItemController<UserInformationItem> {
 		// No one should instantiate these classes but us
 	}
 	
-	// Token for the once call
-	static var token: Int = 0
-	static var instance: UserInformationItemController = UserInformationItemController();
+    
+	static var `default`: UserInformationItemController = UserInformationItemController();
 	
-	// Grabs the instance of the App Controller
-	static func getInstance() -> UserInformationItemController! {
-		return instance;
-	}
-	
-
-	/// Parses and stores raw data from the service
-	override func parseAndStore(_ items: [String:AnyObject]) {
-		
-		// Parse the items
-		let parsed: [UserInformationItem] = UserInformationParser.parseItems(items)!;
-		
+	/**
+     Parses and stores raw data from the service
+     */
+	override func parseAndStore(_ items: [String:Any]) {
+        
+        
+        var returnItems: [UserInformationItem] = [];
+        
+        // Ensure our data can be found
+        if (items["items"] == nil)  {
+            return
+        }
+        
+        // Grab the items to parse
+        let pulled: [[String:Any]] = items["items"] as! [[String:Any]]
+        
+        for pulledItem in pulled {
+            let item = UserInformationItem.from(dictionary: pulledItem)
+            returnItems.append(item)
+        }
+        
 		// Store the items
-		store(parsed);
+		store(returnItems);
 		
 	}
 	
 
-	/// Adds an item to the database
+	/**
+     Adds an item to the database
+     */
 	override func add(_ item: UserInformationItem, database: FMDatabase!) {
 		
 		let vals: RebarDatabaseValues = RebarDatabaseValues();
@@ -74,7 +84,9 @@ class UserInformationItemController : AppItemController<UserInformationItem> {
 	}
 	
 
-	/// updates an item in the database
+	/**
+     updates an item in the database
+     */
 	override func update(_ item: UserInformationItem, database: FMDatabase!) {
 		
 		let vals: RebarDatabaseValues = RebarDatabaseValues();
@@ -91,7 +103,9 @@ class UserInformationItemController : AppItemController<UserInformationItem> {
 	}
 	
 
-	/// Deletes an item from the database
+	/**
+     Deletes an item from the database
+     */
 	override func delete(_ itemId: Int, database: FMDatabase!) {
 		
 		let vals: RebarDatabaseValues = RebarDatabaseValues();
@@ -107,7 +121,9 @@ class UserInformationItemController : AppItemController<UserInformationItem> {
 	}
 	
 
-	/// Reads an item from the database
+	/**
+     Reads an item from the database
+     */
 	override func read(_ resultSet: FMResultSet) -> UserInformationItem? {
 		
 		let data = UserInformationItem();
@@ -122,7 +138,9 @@ class UserInformationItemController : AppItemController<UserInformationItem> {
 	
 	
 
-	/// Retrieves all the items from the database
+	/**
+     Retrieves all the items from the database
+     */
 	override func getAll() -> [UserInformationItem] {
 		
 		let query = "SELECT * FROM REBAR_APP_ITEM ORDER BY ITEM_TEXT DESC";
@@ -139,14 +157,18 @@ class UserInformationItemController : AppItemController<UserInformationItem> {
 	}
 	
 
-	/// Get an item id
+	/**
+     Get an item id
+     */
 	override func getItemId(_ refId: String!, database: FMDatabase) -> Int {
 		return RebarCoreBO.readInteger("SELECT ITEM_ID FROM REBAR_APP_ITEM WHERE ITEM_REF_ID = '\(refId!)'", columnName: "ITEM_ID", database: database);
 	}
 	
 	
 
-	/// Retrieves a single item
+	/**
+     Retrieves a single item
+     */
 	override func get(_ refId: String!) -> UserInformationItem? {
 		var item: UserInformationItem?;
 		getDatabase()?.inDatabase({ (database: FMDatabase!) -> Void in
@@ -157,14 +179,18 @@ class UserInformationItemController : AppItemController<UserInformationItem> {
 	}
 	
 
-	/// Retrieves a single item
+	/**
+     Retrieves a single item
+     */
 	override func get(_ refId: String!, database: FMDatabase) -> UserInformationItem? {
 		let itemId = getItemId(refId, database: database);
 		return get(itemId, database: database);
 	}
 	
 
-	/// Retrieves a single item
+	/**
+     Retrieves a single item
+     */
 	override func get(_ itemId: Int) -> UserInformationItem? {
 		var item: UserInformationItem?;
 		getDatabase()?.inDatabase({ (database: FMDatabase!) -> Void in
@@ -173,7 +199,9 @@ class UserInformationItemController : AppItemController<UserInformationItem> {
 		return item;
 	}
 	
-	/// Retrieves a single item
+	/**
+     Retrieves a single item
+     */
 	override func get(_ itemId: Int, database: FMDatabase) -> UserInformationItem? {
 		let query = "SELECT * FROM REBAR_APP_ITEM WHERE ITEM_ID = '\(itemId)'"
 		let items: [UserInformationItem] = RebarDatabase.executeQuery(query, database: database, reader: {(reader: FMResultSet) -> AnyObject in

@@ -21,22 +21,39 @@
 /// SOFTWARE.
 ///
 
-import Foundation
 import Rebar
 
-class UserInformationItem : AppItem {
-	
-	var text: String?;
+public class LocalUserProfile {
+    
+    /**
+     Defines the user name
+     */
+    public var name: String?
+    
+    
+    public var accountEmail: String?
+    public var accountRefId: String?
+    
+    public var hasProfileSet: Bool = false
     
     
     /**
      Creates a new RecallItem from the dictionary
      */
-    public static func from(dictionary: [String:Any]) -> UserInformationItem {
-        let item = UserInformationItem()
+    public static func from(dictionary: [String:Any]) -> LocalUserProfile {
+        let item = LocalUserProfile()
         
-        if let _val = dictionary["text"] as? String {
-            item.text = _val
+        if let _val = dictionary["name"] as? String {
+            item.name = _val
+        }
+        if let _val = dictionary["accountRefId"] as? String {
+            item.accountRefId = _val
+        }
+        if let _val = dictionary["accountEmail"] as? String {
+            item.accountEmail = _val
+        }
+        if let _val = dictionary["hasProfileSet"] as? Bool {
+            item.hasProfileSet = _val
         }
         
         return item
@@ -49,8 +66,16 @@ class UserInformationItem : AppItem {
         // This will house our data for this as a JSON object
         var toReturn: [String:Any] = [:]
         
-        if let val = text {
-            toReturn["text"] = val
+        toReturn["hasProfileSet"] = hasProfileSet
+        
+        if let name = name {
+            toReturn["name"] = name
+        }
+        if let accountEmail = accountEmail {
+            toReturn["accountEmail"] = accountEmail
+        }
+        if let accountRefId = accountRefId {
+            toReturn["accountRefId"] = accountRefId
         }
         
         return toReturn
@@ -60,7 +85,7 @@ class UserInformationItem : AppItem {
     /**
      Creates an event from JSON
      */
-    public static func from(json: String) -> UserInformationItem {
+    public static func from(json: String) -> LocalUserProfile {
         
         
         if let dataFromString = json.data(using: String.Encoding.utf8, allowLossyConversion: false) {
@@ -94,5 +119,4 @@ class UserInformationItem : AppItem {
             return JSON(asDictionary)
         }
     }
-	
 }
